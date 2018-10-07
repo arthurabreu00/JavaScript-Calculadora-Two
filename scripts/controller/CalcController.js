@@ -5,8 +5,10 @@ class CalcController {
         this.display = document.querySelector(display);
         this.buttons = document.querySelectorAll(buttons);
         this.getButtons();
-        this.operacao = [];
+        this.operacao = [0,0];
         this.cont = [];
+        this.contador = 0;
+        this.result = 0;
     }
 
 
@@ -37,9 +39,17 @@ class CalcController {
                     console.error("Digite um número antes de simbolos")
                 }
             } else{
-                this.cont
+                this.operacao[this.contador] =(this.conversaoNum(this.cont));
+                this.contador++;
+                this.cont = [];
+                console.log(this.operacao)
             }
 
+
+        }
+        console.log('cont ', this.contador )
+        if(this.contador  >= 2 ){
+            this.contador = 0;
         }
 
 
@@ -58,20 +68,27 @@ class CalcController {
             case '0':
             case '.':
                 this.cont.push(btn);
-                this.mostrarTela(this.conversaoTxt(this.cont));
+                this.result = this.conversaoTxt(this.cont)
                 break;
             case '←':
                 this.cont.pop();
                 break;
             case '%':
+                this.percent();
                 break;
             case 'x²':
+                this.elevado();
                 break;
             case '¹/x':
+
                 break;
             case 'CE':
+                this.operacao = [0,0];
+                this.cont = [];
                 break;
             case 'C':
+                this.operacao[1] = 0;
+                this.cont = [];
                 break;
             case '÷':
                 break;
@@ -80,15 +97,40 @@ class CalcController {
             case '±':
                 break;
             case '=':
+                this.mostrarTela(this.result);
                 break;
 
         }
 
-
-        
-
+        this.mostrarTela(this.result);
 
     }
+
+
+    percent(){
+
+        let x = this.operacao[0];
+        let y = this.operacao[1];
+
+
+        let res = (x*100) / y 
+
+
+    };
+
+    
+    elevado(){
+
+        let x = this.operacao[0];
+        let y = this.operacao[1];
+
+
+        let res = Math.pow(x,y); 
+
+        this.mostrarTela(res)
+
+    };
+
 
     conversaoNum(str) {
 
@@ -110,6 +152,7 @@ class CalcController {
 
 
     mostrarTela(val) {
+        console.log(val)
         this.display.innerHTML = val;
     }
 
