@@ -1,17 +1,18 @@
 body {
-    background-color:#050505;
+    background-color:black;
 }
 .center {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    
 }
+
+
 #calculadora {
     background-color: #B1B1B1;
     width: 322px;
-    height: 500px;
+    height: 460px;
     padding: 6px;
 }
 #calculadora .btn {
@@ -34,6 +35,8 @@ header {
     position: relative;
 }
 #display {
+    background: none;
+    border: none;
     color: #000;
     text-align: right;
     position: absolute;
@@ -41,6 +44,7 @@ header {
     width: 100%;
     font-size: 48px;
     font-weight: 600;
+    outline:none
 }
 .btn-number {
     background-color: #EFEFEF;
