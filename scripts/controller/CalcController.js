@@ -1,5 +1,5 @@
 class CalcController {
-
+// Teste
     constructor(display, buttons) {
 
         this.display = document.querySelector(display);
