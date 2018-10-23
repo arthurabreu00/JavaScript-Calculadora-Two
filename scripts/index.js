@@ -1,1 +1,1 @@
-let calculadora = new CalcController('#display','.btn');
+window.app = new CalcController('#display','.btn');

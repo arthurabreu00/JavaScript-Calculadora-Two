@@ -1,5 +1,4 @@
 class CalcController {
-    // Teste
         constructor(display, buttons) {
     
             this.display = document.querySelector(display);
@@ -13,22 +12,27 @@ class CalcController {
         initEvents(){
             this.buttons.forEach(element => {
                 element.addEventListener("click", ()=>{
-    
                     this.txtButton(element.innerHTML);
                 })
             });
+
+            this.buttons.forEach(element => {
+                element.addEventListener("click", ()=>{
+                    this.txtButton(element.innerHTML);
+                })
+            });
+
         }
     
         txtButton(txt){
+
+            let num = Number(this.display.value);
     
     
             if(!isNaN(txt))
                 this.display.value += txt;
             else{
-                this.contSimb++;
-                    switch (txt) {
-                        case '%':
-                            break;
+                switch (txt) {
                         case '.':
                             if(this.display.value.length == 0){
                                 this.display.value += 0 + txt;
@@ -43,7 +47,9 @@ class CalcController {
                             this.calculo();
                             break;
                         case 'x²':{
-                            this.display.value += this.display.value * this.display.value;
+                            this.display.value = Math.pow(num, 2);
+                            
+                           
                         }
                         case '÷':
                             this.display.value += '/';
@@ -52,35 +58,35 @@ class CalcController {
                             this.display.value = "";
                             break;
                         case '←':
-                            this.display.value = this.removeOneCaract();
+                            this.removeOneCaract();
                             break;
+                        case '%':
+                            this.display.value+="/100 *";
+                        break;
+
                         default:
+                            
                             this.display.value += txt;
                             break;
                     }
                 
-               
             }
         }
+
+        
     
         calculo(){
             let calc = eval(this.display.value);
             this.display.value = calc;
             this.contSimb = 0;
             this.verificar = '';
+            console.log(this.display.value);
         }
     
         removeOneCaract(){
             let str = this.display.value;
             str = str.substring(0,(str.length - 1));
-            return str;
-    
-            
-    
-    
+            this.display.value = str;
         }
-    
-    
-    
     
     }
