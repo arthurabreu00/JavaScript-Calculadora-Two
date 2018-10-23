@@ -1,1 +1,1 @@
-window.app = new CalcController('#display','.btn');
+window.calculator= new CalcController('#display','.btn');

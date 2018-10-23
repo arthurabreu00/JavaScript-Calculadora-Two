@@ -16,11 +16,13 @@ class CalcController {
                 })
             });
 
-            this.buttons.forEach(element => {
-                element.addEventListener("click", ()=>{
-                    this.txtButton(element.innerHTML);
-                })
-            });
+            this.display.addEventListener('keyup',e =>{
+
+                // this.txtKeyBord(e.key)
+                console.log(e.key)
+
+            })
+
 
         }
     
@@ -44,12 +46,10 @@ class CalcController {
                             this.display.value += '*';
                             break;
                         case '=':
-                            this.calculo();
+                            this.calculate();
                             break;
                         case 'x²':{
                             this.display.value = Math.pow(num, 2);
-                            
-                           
                         }
                         case '÷':
                             this.display.value += '/';
@@ -73,9 +73,29 @@ class CalcController {
             }
         }
 
+
+        txtKeyBord(txt){
+
+            switch(txt){
+                case 'Enter':
+                    this.calculate();
+                break;
+
+                case 'X':
+                case 'x':
+                    this.display.value += '*';
+                break;
+                case '%':
+                this.display.value+="/100 *";
+            break;
+            }
+
+    
+        }
+
         
     
-        calculo(){
+        calculate(){
             let calc = eval(this.display.value);
             this.display.value = calc;
             this.contSimb = 0;
