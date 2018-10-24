@@ -13,17 +13,18 @@ class CalcController {
 
             let tecla = e.keyCode;
 
-            if(!isNaN(tecla)){
+            if(!isNaN(e.key)){
                 return true;
-            }
-
-            if(tecla >= 65 && tecla <= 90){
+            } else if(tecla == 88){
+                return true
+            }else if(tecla == 32 || (tecla >= 65 && tecla <= 90)){
                 return false;
             }
-
-            return false;
+            return true;
 
         }
+
+        
     
     
         initEvents(){
@@ -41,7 +42,9 @@ class CalcController {
                     console.log("Tecla", e.key)
                 
                     this.txtKeyBord(e.key);
-                };
+                }else{
+                    this.removeOneCaract();
+                }
 
                 
             })
@@ -56,10 +59,9 @@ class CalcController {
         txtButton(txt){
 
             let num = Number(this.display.value);
-            this.observer();
-    
+
             if(!isNaN(txt))
-                this.display.value += txt;
+                this.display.value += txt;      
             else{
                 switch (txt) {
                         case '.':
@@ -77,19 +79,18 @@ class CalcController {
                             this.calculate();
                             break;
                         case 'x²':
+                            this.removeOneCaract();
                             this.lastOperation = "x²";
                             this.display.value = Math.pow(num, 2);
-                        
+                        case '←':
+                            this.removeOneCaract();
+                        break;
                         case '÷':
                             this.display.value += '/';
-                            
                             break;
                         case 'CE':
                             this.display.value = "";
-                            break;
-                        case '←':
-                            this.removeOneCaract();
-                            break;
+                        break;
                         case '%':
                             this.display.value+="/100 *";
                         break;
@@ -126,14 +127,15 @@ class CalcController {
             }
         }
 
-        
-    
         calculate(){
 
             let calc = eval(this.display.value);
-            this.display.value = calc;
-            this.contSimb = 0;
-            this.verificar = '';
+
+            if(calc == undefined){
+                this.display.value = "";
+            }else{
+                this.display.value = calc;
+            }
         }
     
         removeOneCaract(){
