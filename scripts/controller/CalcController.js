@@ -6,6 +6,23 @@ class CalcController {
             this.initEvents();
             this.contSimb = 0;
             this.verificar = "";
+            this.lastOperation = "";
+        }
+
+        isNumber(e){
+
+            let tecla = e.keyCode;
+
+            if(!isNaN(tecla)){
+                return true;
+            }
+
+            if(tecla >= 65 && tecla <= 90){
+                return false;
+            }
+
+            return false;
+
         }
     
     
@@ -17,19 +34,29 @@ class CalcController {
             });
 
             this.display.addEventListener('keyup',e =>{
+                if(this.isNumber(e)){
 
-                // this.txtKeyBord(e.key)
-                console.log(e.key)
+                    console.log("--------------------")
+                    console.log("Código", e.keyCode)
+                    console.log("Tecla", e.key)
+                
+                    this.txtKeyBord(e.key);
+                };
 
+                
             })
+        }
 
-
+        observer(){
+            if(this.lastOperation == "x²"){
+                this.removeOneCaract();
+            }
         }
     
         txtButton(txt){
 
             let num = Number(this.display.value);
-    
+            this.observer();
     
             if(!isNaN(txt))
                 this.display.value += txt;
@@ -43,16 +70,19 @@ class CalcController {
                             }
                             break;
                         case 'X':
+                        case 'x':
                             this.display.value += '*';
                             break;
                         case '=':
                             this.calculate();
                             break;
-                        case 'x²':{
+                        case 'x²':
+                            this.lastOperation = "x²";
                             this.display.value = Math.pow(num, 2);
-                        }
+                        
                         case '÷':
                             this.display.value += '/';
+                            
                             break;
                         case 'CE':
                             this.display.value = "";
@@ -80,27 +110,30 @@ class CalcController {
                 case 'Enter':
                     this.calculate();
                 break;
-
+                case '=':
+                    this.removeOneCaract();
+                    this.calculate();
+                break;
                 case 'X':
                 case 'x':
+                    this.removeOneCaract();
                     this.display.value += '*';
                 break;
                 case '%':
                 this.display.value+="/100 *";
             break;
-            }
 
-    
+            }
         }
 
         
     
         calculate(){
+
             let calc = eval(this.display.value);
             this.display.value = calc;
             this.contSimb = 0;
             this.verificar = '';
-            console.log(this.display.value);
         }
     
         removeOneCaract(){
